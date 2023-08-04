@@ -1,4 +1,4 @@
-package me.shockyng.rentacarkotlinjakartaee
+package me.shockyng.rentacar.api
 
 import jakarta.ws.rs.GET
 import jakarta.ws.rs.Path
@@ -6,6 +6,7 @@ import jakarta.ws.rs.Produces
 
 @Path("/hello-world")
 class HelloResource {
+
     @GET
     @Produces("text/plain")
     fun hello(): String {
