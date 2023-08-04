@@ -1,0 +1,49 @@
+plugins {
+    id 'java'
+    id 'org.jetbrains.kotlin.jvm' version '1.8.10'
+    id 'org.jetbrains.kotlin.plugin.allopen' version '1.8.10'
+    id 'war'
+}
+
+group 'me.shockyng'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    junitVersion = '5.9.2'
+}
+
+sourceCompatibility = '11'
+targetCompatibility = '11'
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+[compileKotlin, compileTestKotlin].forEach {
+    it.kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+allOpen {
+    annotation('jakarta.ws.rs.Path')
+    annotation('jakarta.enterprise.context.ApplicationScoped')
+}
+
+
+dependencies {
+    compileOnly('jakarta.enterprise:jakarta.enterprise.cdi-api:3.0.0')
+    compileOnly('jakarta.ws.rs:jakarta.ws.rs-api:3.0.0')
+    compileOnly('jakarta.servlet:jakarta.servlet-api:5.0.0')
+
+    testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
+}
+
+test {
+    useJUnitPlatform()
+}
